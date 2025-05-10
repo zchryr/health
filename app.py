@@ -6,16 +6,17 @@ from urllib.parse import urlparse
 
 # Create the main FastAPI app
 app = FastAPI(
-    title="Python Package Repository Checker",
-    description="API to check repository information for Python packages on PyPI",
+    title="Package Repository Checker",
+    description="API to check repository information for Python packages on PyPI and NPM packages on npmjs.org",
     version="1.0.0"
 )
 
 # Create a router for v1
 v1_router = APIRouter(prefix="/v1")
 
-# Create a router for pypi endpoints
+# Create routers for package endpoints
 pypi_router = APIRouter(prefix="/pypi")
+npm_router = APIRouter(prefix="/npm")
 
 class PackageInfo(BaseModel):
     name: str
@@ -41,10 +42,26 @@ def get_library_info(library_name: str) -> Dict:
     except requests.exceptions.RequestException as e:
         return None
 
+def get_npm_info(package_name: str) -> Dict:
+    """
+    Get information about an NPM package from npmjs.org.
+    """
+    url = f"https://registry.npmjs.org/{package_name}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return None
+
 def parse_repo_url(url: str) -> tuple[Optional[str], Optional[str], Optional[str]]:
     """
     Parse a repository URL to extract platform, organization, and repository name.
     """
+    # Handle git+https:// URLs
+    if url.startswith('git+'):
+        url = url[4:]
+
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.strip('/').split('/')
 
@@ -99,10 +116,24 @@ def extract_repo_info(info: Dict) -> tuple[Optional[str], Optional[str], Optiona
 
     return None, None, None, None
 
+def extract_npm_repo_info(info: Dict) -> tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
+    """
+    Extract repository information from NPM package info.
+    """
+    if not info or "repository" not in info:
+        return None, None, None, None
+
+    repo_url = info["repository"].get("url")
+    if not repo_url:
+        return None, None, None, None
+
+    platform, org, repo = parse_repo_url(repo_url)
+    return repo_url, platform, org, repo
+
 @pypi_router.get("/{package_name}", response_model=PackageInfo)
 async def get_package_info(package_name: str):
     """
-    Get repository information for a single package.
+    Get repository information for a single PyPI package.
     """
     info = get_library_info(package_name)
 
@@ -121,10 +152,31 @@ async def get_package_info(package_name: str):
         repository_name=repo
     )
 
+@npm_router.get("/{package_name}", response_model=PackageInfo)
+async def get_npm_package_info(package_name: str):
+    """
+    Get repository information for a single NPM package.
+    """
+    info = get_npm_info(package_name)
+
+    if not info:
+        raise HTTPException(status_code=404, detail=f"Package {package_name} not found on npmjs.org")
+
+    repo_url, platform, org, repo = extract_npm_repo_info(info)
+
+    return PackageInfo(
+        name=package_name,
+        summary=info.get("description"),
+        repository_url=repo_url,
+        repository_platform=platform,
+        repository_org=org,
+        repository_name=repo
+    )
+
 @pypi_router.post("/batch", response_model=PackageResponse)
 async def get_multiple_packages(package_names: List[str]):
     """
-    Get repository information for multiple packages.
+    Get repository information for multiple PyPI packages.
     """
     results = []
 
@@ -152,8 +204,39 @@ async def get_multiple_packages(package_names: List[str]):
 
     return PackageResponse(packages=results)
 
+@npm_router.post("/batch", response_model=PackageResponse)
+async def get_multiple_npm_packages(package_names: List[str]):
+    """
+    Get repository information for multiple NPM packages.
+    """
+    results = []
+
+    for package_name in package_names:
+        info = get_npm_info(package_name)
+
+        if not info:
+            results.append(PackageInfo(
+                name=package_name,
+                error=f"Package {package_name} not found on npmjs.org"
+            ))
+            continue
+
+        repo_url, platform, org, repo = extract_npm_repo_info(info)
+
+        results.append(PackageInfo(
+            name=package_name,
+            summary=info.get("description"),
+            repository_url=repo_url,
+            repository_platform=platform,
+            repository_org=org,
+            repository_name=repo
+        ))
+
+    return PackageResponse(packages=results)
+
 # Include the routers
 v1_router.include_router(pypi_router)
+v1_router.include_router(npm_router)
 app.include_router(v1_router)
 
 if __name__ == "__main__":
