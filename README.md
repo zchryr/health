@@ -35,6 +35,13 @@ A FastAPI-based service that provides repository information for both Python pac
 pip install fastapi uvicorn requests pydantic
 ```
 
+## Development Setup
+
+For development, install the additional development dependencies:
+```bash
+pip install -r requirements-dev.txt
+```
+
 ## Running the Application
 
 Start the server with:
@@ -49,6 +56,52 @@ The API will be available at `http://localhost:8000`
 Once the server is running, you can access:
 - Interactive API documentation: `http://localhost:8000/docs`
 - Alternative API documentation: `http://localhost:8000/redoc`
+
+## Testing
+
+The project uses pytest for testing and pytest-cov for coverage reporting.
+
+### Running Tests
+
+Run all tests:
+```bash
+python3 -m pytest test_app.py
+```
+
+### Test Coverage
+
+View test coverage report:
+```bash
+python3 -m pytest --cov=app test_app.py
+```
+
+View detailed coverage report with missing lines:
+```bash
+python3 -m pytest --cov=app --cov-report=term-missing test_app.py
+```
+
+Generate HTML coverage report:
+```bash
+python3 -m pytest --cov=app --cov-report=html test_app.py
+```
+This will create a `htmlcov` directory with an interactive HTML report. Open `htmlcov/index.html` in your browser to view the detailed coverage report.
+
+### Current Test Coverage
+
+The test suite includes:
+- Unit tests for utility functions
+- API endpoint tests for both PyPI and NPM routes
+- Error handling tests
+- Repository URL parsing tests
+
+Current coverage: 81%
+
+### Test Structure
+
+- `test_app.py`: Contains all test cases
+  - Utility function tests
+  - API endpoint tests
+  - Mock fixtures for PyPI and NPM responses
 
 ## Response Format
 
