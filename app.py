@@ -25,7 +25,9 @@ class PackageInfo(BaseModel):
     repository_platform: Optional[str] = None
     repository_org: Optional[str] = None
     repository_name: Optional[str] = None
-    error: Optional[str] = None
+    latest_version: Optional[str] = None
+    created_date: Optional[str] = None
+    error: bool = False
 
 class PackageResponse(BaseModel):
     packages: List[PackageInfo]
@@ -130,6 +132,22 @@ def extract_npm_repo_info(info: Dict) -> tuple[Optional[str], Optional[str], Opt
     platform, org, repo = parse_repo_url(repo_url)
     return repo_url, platform, org, repo
 
+def get_earliest_release_date(info: Dict) -> Optional[str]:
+    """
+    Get the earliest release date from PyPI package info.
+    """
+    if not info or "releases" not in info:
+        return None
+
+    earliest_date = None
+    for version, releases in info["releases"].items():
+        for release in releases:
+            upload_time = release.get("upload_time_iso_8601")
+            if upload_time and (earliest_date is None or upload_time < earliest_date):
+                earliest_date = upload_time
+
+    return earliest_date
+
 @pypi_router.get("/{package_name}", response_model=PackageInfo)
 async def get_package_info(package_name: str):
     """
@@ -142,6 +160,8 @@ async def get_package_info(package_name: str):
 
     package_info = info.get("info", {})
     repo_url, platform, org, repo = extract_repo_info(package_info)
+    latest_version = package_info.get("version")
+    created_date = get_earliest_release_date(info)
 
     return PackageInfo(
         name=package_name,
@@ -149,7 +169,10 @@ async def get_package_info(package_name: str):
         repository_url=repo_url,
         repository_platform=platform,
         repository_org=org,
-        repository_name=repo
+        repository_name=repo,
+        latest_version=latest_version,
+        created_date=created_date,
+        error=False
     )
 
 @npm_router.get("/{package_name}", response_model=PackageInfo)
@@ -163,6 +186,8 @@ async def get_npm_package_info(package_name: str):
         raise HTTPException(status_code=404, detail=f"Package {package_name} not found on npmjs.org")
 
     repo_url, platform, org, repo = extract_npm_repo_info(info)
+    latest_version = info.get("dist-tags", {}).get("latest")
+    created_date = info.get("time", {}).get("created")
 
     return PackageInfo(
         name=package_name,
@@ -170,7 +195,10 @@ async def get_npm_package_info(package_name: str):
         repository_url=repo_url,
         repository_platform=platform,
         repository_org=org,
-        repository_name=repo
+        repository_name=repo,
+        latest_version=latest_version,
+        created_date=created_date,
+        error=False
     )
 
 @pypi_router.post("/batch", response_model=PackageResponse)
@@ -186,12 +214,14 @@ async def get_multiple_packages(package_names: List[str]):
         if not info:
             results.append(PackageInfo(
                 name=package_name,
-                error=f"Package {package_name} not found on PyPI"
+                error=True
             ))
             continue
 
         package_info = info.get("info", {})
         repo_url, platform, org, repo = extract_repo_info(package_info)
+        latest_version = package_info.get("version")
+        created_date = get_earliest_release_date(info)
 
         results.append(PackageInfo(
             name=package_name,
@@ -199,7 +229,10 @@ async def get_multiple_packages(package_names: List[str]):
             repository_url=repo_url,
             repository_platform=platform,
             repository_org=org,
-            repository_name=repo
+            repository_name=repo,
+            latest_version=latest_version,
+            created_date=created_date,
+            error=False
         ))
 
     return PackageResponse(packages=results)
@@ -217,11 +250,13 @@ async def get_multiple_npm_packages(package_names: List[str]):
         if not info:
             results.append(PackageInfo(
                 name=package_name,
-                error=f"Package {package_name} not found on npmjs.org"
+                error=True
             ))
             continue
 
         repo_url, platform, org, repo = extract_npm_repo_info(info)
+        latest_version = info.get("dist-tags", {}).get("latest")
+        created_date = info.get("time", {}).get("created")
 
         results.append(PackageInfo(
             name=package_name,
@@ -229,7 +264,10 @@ async def get_multiple_npm_packages(package_names: List[str]):
             repository_url=repo_url,
             repository_platform=platform,
             repository_org=org,
-            repository_name=repo
+            repository_name=repo,
+            latest_version=latest_version,
+            created_date=created_date,
+            error=False
         ))
 
     return PackageResponse(packages=results)
