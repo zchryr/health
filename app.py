@@ -90,8 +90,8 @@ def extract_repo_info(info: Dict) -> tuple[Optional[str], Optional[str], Optiona
         return None, None, None, None
 
     # Priority order for repository URL types
-    primary_repo_types = ["Source", "Homepage"]
-    secondary_repo_types = ["Repository", "Code"]
+    primary_repo_types = ["Source", "Repository", "Code"]
+    secondary_repo_types = ["Homepage"]
 
     # First try primary repository URL types
     for url_type, url in info["project_urls"].items():
