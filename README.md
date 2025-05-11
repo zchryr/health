@@ -15,6 +15,19 @@ A FastAPI-based service that provides repository information for both Python pac
 - Version 1.0.0 API with structured response formats
 - Error handling for non-existent packages
 
+## Language Support
+- [x] Python (PyPi)
+- [x] JavaScript (npmjs.org)
+- [ ] Java
+- [ ] C#
+- [ ] PHP
+- [ ] C++
+- [ ] Go
+- [ ] Ruby
+- [ ] Kotlin
+- [ ] Swift
+- [ ] Rust
+
 ## API Endpoints
 
 ### PyPI Package Endpoints
@@ -26,6 +39,8 @@ A FastAPI-based service that provides repository information for both Python pac
 
 - `GET /v1/npm/{package_name}` - Get information for a single NPM package
 - `POST /v1/npm/batch` - Get information for multiple NPM packages
+
+
 
 ## Installation
 
@@ -56,6 +71,38 @@ The API will be available at `http://localhost:8000`
 Once the server is running, you can access:
 - Interactive API documentation: `http://localhost:8000/docs`
 - Alternative API documentation: `http://localhost:8000/redoc`
+
+## API Examples
+
+### PyPI Package Examples
+
+Get information for a single PyPI package:
+```bash
+curl http://localhost:8000/v1/pypi/requests
+```
+
+Get information for multiple PyPI packages:
+```bash
+curl -X POST http://localhost:8000/v1/pypi/batch \
+  -H "Content-Type: application/json" \
+  -d '["requests", "fastapi", "pytest"]'
+```
+
+### NPM Package Examples
+
+Get information for a single NPM package:
+```bash
+curl http://localhost:8000/v1/npm/express
+```
+
+Get information for multiple NPM packages:
+```bash
+curl -X POST http://localhost:8000/v1/npm/batch \
+  -H "Content-Type: application/json" \
+  -d '["express", "react", "typescript"]'
+```
+
+Example responses for each endpoint can be found in the Response Format section below.
 
 ## Testing
 
