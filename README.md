@@ -1,102 +1,101 @@
-# PyPI Repository Analyzer
+# Package Repository Checker API
 
-A Python tool that analyzes Python packages on PyPI to extract and analyze their repository information. This tool helps developers map Python packages to their source repositories, understand package maintainers, and identify repository platform usage patterns.
+A FastAPI-based service that provides repository information for both Python packages (PyPI) and NPM packages (npmjs.org). This API helps developers quickly access package metadata, repository information, and version details for multiple packages simultaneously.
 
 ## Features
 
-- Fetches package metadata from PyPI's JSON API
-- Identifies repository URLs from project metadata
-- Parses repository URLs to extract:
-  - Platform (GitHub/GitLab/Bitbucket)
-  - Organization name
-  - Repository name
-- Provides detailed statistics about repository usage
-- Handles error cases gracefully
-- Offers both detailed and summary views of package information
+- RESTful API endpoints for both PyPI and NPM packages
+- Batch processing support for multiple packages
+- Extracts detailed package information including:
+  - Package summary/description
+  - Repository URL and platform (GitHub/GitLab/Bitbucket)
+  - Organization and repository names
+  - Latest version
+  - Creation date
+- Version 1.0.0 API with structured response formats
+- Error handling for non-existent packages
+
+## API Endpoints
+
+### PyPI Package Endpoints
+
+- `GET /v1/pypi/{package_name}` - Get information for a single PyPI package
+- `POST /v1/pypi/batch` - Get information for multiple PyPI packages
+
+### NPM Package Endpoints
+
+- `GET /v1/npm/{package_name}` - Get information for a single NPM package
+- `POST /v1/npm/batch` - Get information for multiple NPM packages
 
 ## Installation
 
 1. Clone this repository
 2. Install the required dependencies:
 ```bash
-pip install requests
+pip install fastapi uvicorn requests pydantic
 ```
 
-## Usage
+## Running the Application
 
-Run the script with:
+Start the server with:
 ```bash
-python check_libraries.py
+python app.py
 ```
 
-## Output Format
+The API will be available at `http://localhost:8000`
 
-### Individual Package Information
-```
-PACKAGE_NAME
-============
-Summary: Package description
+## API Documentation
 
-Project URLs:
-  • URL_TYPE (platform): organization/repository
-```
+Once the server is running, you can access:
+- Interactive API documentation: `http://localhost:8000/docs`
+- Alternative API documentation: `http://localhost:8000/redoc`
 
-### Repository Analysis
-```
-Repository Analysis
-==================================================
-Total packages analyzed: X
-Packages with repository URLs: Y
-Packages without repository URLs: Z
+## Response Format
 
-Repository Platform Statistics:
---------------------------------------------------
-GITHUB:
-  Packages using github: X
-  Repositories:
-    • organization/repository
-
-Package Repository Mapping:
---------------------------------------------------
-  • package-name: platform - organization/repository
+### Single Package Response
+```json
+{
+    "name": "package-name",
+    "summary": "Package description",
+    "repository_url": "https://github.com/org/repo",
+    "repository_platform": "github",
+    "repository_org": "org",
+    "repository_name": "repo",
+    "latest_version": "1.0.0",
+    "created_date": "2020-01-01T00:00:00Z",
+    "error": false
+}
 ```
 
-## Supported Libraries
-
-The tool currently analyzes the following Python packages:
-```python
-libraries = [
-    "boto3", "urllib3", "requests", "certifi",
-    "charset-normalizer", "idna", "python-dateutil",
-    "aiobotocore", "six", "s3fs", "botocore",
-    "setuptools", "requests-aws4auth", "grpcio-status",
-    "opensearch-py", "typing-extensions", "events",
-    "packaging", "s3transfer", "numpy", "pyyaml",
-    "fsspec", "pydantic"
-]
+### Batch Response
+```json
+{
+    "packages": [
+        {
+            "name": "package1",
+            ...
+        },
+        {
+            "name": "package2",
+            ...
+        }
+    ]
+}
 ```
 
-## Key Functions
+## Error Handling
 
-- `get_library_info(library_name)`: Fetches package info from PyPI
-- `parse_repo_url(url)`: Extracts platform, org, and repo from URLs
-- `analyze_repo_urls(libraries_info)`: Analyzes and displays repository statistics
+- Returns 404 status code for non-existent packages
+- Includes error flag in response for failed package lookups in batch requests
+- Gracefully handles missing repository information
 
 ## Dependencies
 
-- `requests`: For making HTTP requests to PyPI
-- `urllib.parse`: For parsing URLs
-- `collections.defaultdict`: For collecting statistics
-- Standard library imports for typing and JSON handling
-
-## Use Cases
-
-This tool helps developers:
-1. Map Python packages to their source repositories
-2. Understand which organizations maintain which packages
-3. Identify which repository platforms are most commonly used
-4. Find packages that might be missing repository links
-5. Get a quick overview of package metadata and documentation
+- `fastapi`: Web framework for building APIs
+- `uvicorn`: ASGI server for running the application
+- `requests`: HTTP client for making API requests
+- `pydantic`: Data validation and settings management
+- Standard library imports for typing and URL parsing
 
 ## Contributing
 
