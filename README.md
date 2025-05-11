@@ -40,8 +40,6 @@ A FastAPI-based service that provides repository information for both Python pac
 - `GET /v1/npm/{package_name}` - Get information for a single NPM package
 - `POST /v1/npm/batch` - Get information for multiple NPM packages
 
-
-
 ## Installation
 
 1. Clone this repository
@@ -49,6 +47,55 @@ A FastAPI-based service that provides repository information for both Python pac
 ```bash
 pip install fastapi uvicorn requests pydantic
 ```
+
+## Docker Deployment
+
+The application can be deployed using Docker for a secure, isolated environment. The Dockerfile includes several security hardening measures:
+
+- Uses Python 3.12.10 on Alpine Linux for a minimal attack surface
+- Runs as a non-root user for enhanced security
+- Implements security best practices for Python and pip
+- Regular system package updates
+- Proper file permissions and ownership
+
+### Building the Docker Image
+
+```bash
+docker build -t package-repo-checker .
+```
+
+### Running the Container
+
+```bash
+docker run -p 8000:8000 package-repo-checker
+```
+
+The API will be available at `http://localhost:8000`
+
+### Docker Security Features
+
+The Dockerfile implements several security measures:
+
+1. **Non-root User**: The application runs as a dedicated non-root user `appuser`
+2. **Package Updates**: All system packages are updated during build
+3. **Python Security Settings**:
+   - Disabled Python bytecode generation
+   - Enabled better error handling
+   - Randomized Python hash seed
+4. **Pip Security Settings**:
+   - Disabled pip cache
+   - Disabled version checks
+   - Set reasonable timeouts
+5. **File Permissions**: Proper ownership and permissions for application files
+
+### Production Considerations
+
+For production deployments, consider:
+- Using Docker secrets for sensitive data
+- Implementing rate limiting
+- Using HTTPS
+- Regular image updates
+- Docker Content Trust for image signing
 
 ## Development Setup
 
