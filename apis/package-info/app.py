@@ -72,11 +72,11 @@ def parse_repo_url(url: str) -> tuple[Optional[str], Optional[str], Optional[str
         repo = path_parts[1]
         repo = repo.replace('.git', '')
 
-        if 'github.com' in parsed_url.netloc:
+        if parsed_url.netloc.endswith('.github.com') or parsed_url.netloc == 'github.com':
             return 'github', org, repo
-        elif 'gitlab.com' in parsed_url.netloc:
+        elif parsed_url.netloc.endswith('.gitlab.com') or parsed_url.netloc == 'gitlab.com':
             return 'gitlab', org, repo
-        elif 'bitbucket.org' in parsed_url.netloc:
+        elif parsed_url.netloc.endswith('.bitbucket.org') or parsed_url.netloc == 'bitbucket.org':
             return 'bitbucket', org, repo
 
     return None, None, None
