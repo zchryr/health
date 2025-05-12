@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, APIRouter
 from typing import List, Dict, Optional
 from pydantic import BaseModel
 import requests
+import re
 from urllib.parse import urlparse
 
 # Create the main FastAPI app
@@ -36,6 +37,10 @@ def get_library_info(library_name: str) -> Dict:
     """
     Get information about a Python library from PyPI.
     """
+    # Validate library_name to prevent partial SSRF
+    if not re.match(r"^[a-zA-Z0-9_-]+$", library_name):
+        raise ValueError("Invalid library name. Only alphanumeric characters, dashes, and underscores are allowed.")
+
     url = f"https://pypi.org/pypi/{library_name}/json"
     try:
         response = requests.get(url)
