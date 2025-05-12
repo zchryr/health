@@ -26,8 +26,6 @@ This repository contains tools and services for analyzing and monitoring package
   - `go-project/`: Example Go project
   - `python-project/`: Example Python project
 
-- `poc/`: Proof of concept implementations and experimental features
-
 ## Purpose
 
 This repository aims to provide tools and services for:
