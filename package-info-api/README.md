@@ -4,29 +4,23 @@ A FastAPI-based service that provides repository information for both Python pac
 
 ## Features
 
-- RESTful API endpoints for both PyPI and NPM packages
-- Batch processing support for multiple packages
-- Extracts detailed package information including:
+- **Multi-Platform Support**
+  - Python packages (PyPI)
+  - JavaScript packages (npmjs.org)
+  - Planned support for Java, C#, PHP, C++, Go, Ruby, Kotlin, Swift, and Rust
+
+- **Package Information**
   - Package summary/description
   - Repository URL and platform (GitHub/GitLab/Bitbucket)
   - Organization and repository names
   - Latest version
   - Creation date
-- Version 1.0.0 API with structured response formats
-- Error handling for non-existent packages
 
-## Language Support
-- [x] Python (PyPi)
-- [x] JavaScript (npmjs.org)
-- [ ] Java
-- [ ] C#
-- [ ] PHP
-- [ ] C++
-- [ ] Go
-- [ ] Ruby
-- [ ] Kotlin
-- [ ] Swift
-- [ ] Rust
+- **API Features**
+  - RESTful API endpoints for both PyPI and NPM packages
+  - Batch processing support for multiple packages
+  - Version 1.0.0 API with structured response formats
+  - Error handling for non-existent packages
 
 ## API Endpoints
 
@@ -42,73 +36,28 @@ A FastAPI-based service that provides repository information for both Python pac
 
 ## Installation
 
-1. Clone this repository
-2. Install the required dependencies:
+1. Clone the repository:
+```bash
+git clone https://github.com/zchryr/health.git
+cd health/package-info-api
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Docker Deployment
-
-The application can be deployed using Docker for a secure, isolated environment. The Dockerfile includes several security hardening measures:
-
-- Uses Python 3.12.10 on Alpine Linux for a minimal attack surface
-- Runs as a non-root user for enhanced security
-- Implements security best practices for Python and pip
-- Regular system package updates
-- Proper file permissions and ownership
-
-### Building the Docker Image
-
-```bash
-docker build -t package-repo-checker .
-```
-
-### Running the Container
-
-```bash
-docker run -p 8000:8000 package-repo-checker
-```
-
-The API will be available at `http://localhost:8000`
-
-### Docker Security Features
-
-The Dockerfile implements several security measures:
-
-1. **Non-root User**: The application runs as a dedicated non-root user `appuser`
-2. **Package Updates**: All system packages are updated during build
-3. **Python Security Settings**:
-   - Disabled Python bytecode generation
-   - Enabled better error handling
-   - Randomized Python hash seed
-4. **Pip Security Settings**:
-   - Disabled pip cache
-   - Disabled version checks
-   - Set reasonable timeouts
-5. **File Permissions**: Proper ownership and permissions for application files
-
-### Production Considerations
-
-For production deployments, consider:
-- Using Docker secrets for sensitive data
-- Implementing rate limiting
-- Using HTTPS
-- Regular image updates
-- Docker Content Trust for image signing
-
-## Development Setup
-
-For development, install the additional development dependencies:
-```bash
-pip install -r requirements-dev.txt
-```
-
 ## Running the Application
 
-Start the server with:
+Start the server:
 ```bash
-python app.py
+uvicorn app:app --reload
 ```
 
 The API will be available at `http://localhost:8000`
@@ -149,54 +98,6 @@ curl -X POST http://localhost:8000/v1/npm/batch \
   -d '["express", "react", "typescript"]'
 ```
 
-Example responses for each endpoint can be found in the Response Format section below.
-
-## Testing
-
-The project uses pytest for testing and pytest-cov for coverage reporting.
-
-### Running Tests
-
-Run all tests:
-```bash
-python3 -m pytest test_app.py
-```
-
-### Test Coverage
-
-View test coverage report:
-```bash
-python3 -m pytest --cov=app test_app.py
-```
-
-View detailed coverage report with missing lines:
-```bash
-python3 -m pytest --cov=app --cov-report=term-missing test_app.py
-```
-
-Generate HTML coverage report:
-```bash
-python3 -m pytest --cov=app --cov-report=html test_app.py
-```
-This will create a `htmlcov` directory with an interactive HTML report. Open `htmlcov/index.html` in your browser to view the detailed coverage report.
-
-### Current Test Coverage
-
-The test suite includes:
-- Unit tests for utility functions
-- API endpoint tests for both PyPI and NPM routes
-- Error handling tests
-- Repository URL parsing tests
-
-Current coverage: 81%
-
-### Test Structure
-
-- `test_app.py`: Contains all test cases
-  - Utility function tests
-  - API endpoint tests
-  - Mock fixtures for PyPI and NPM responses
-
 ## Response Format
 
 ### Single Package Response
@@ -230,6 +131,70 @@ Current coverage: 81%
 }
 ```
 
+## Docker Deployment
+
+The application can be deployed using Docker for a secure, isolated environment.
+
+### Building the Docker Image
+
+```bash
+docker build -t package-repo-checker .
+```
+
+### Running the Container
+
+```bash
+docker run -p 8000:8000 package-repo-checker
+```
+
+### Docker Security Features
+
+- Uses Python 3.12.10 on Alpine Linux
+- Runs as non-root user
+- Implements security best practices
+- Regular system package updates
+- Proper file permissions and ownership
+
+### Production Considerations
+
+- Use Docker secrets for sensitive data
+- Implement rate limiting
+- Use HTTPS
+- Regular image updates
+- Docker Content Trust for image signing
+
+## Development Setup
+
+For development, install the additional development dependencies:
+```bash
+pip install -r requirements-dev.txt
+```
+
+## Testing
+
+The project uses pytest for testing and pytest-cov for coverage reporting.
+
+### Running Tests
+
+Run all tests:
+```bash
+python3 -m pytest test_app.py
+```
+
+### Test Coverage
+
+View test coverage report:
+```bash
+python3 -m pytest --cov=app test_app.py
+```
+
+Generate HTML coverage report:
+```bash
+python3 -m pytest --cov=app --cov-report=html test_app.py
+```
+
+Current coverage: 81%
+
 ## Error Handling
 
 - Returns 404 status code for non-existent packages
@@ -242,8 +207,11 @@ Current coverage: 81%
 - `uvicorn`: ASGI server for running the application
 - `requests`: HTTP client for making API requests
 - `pydantic`: Data validation and settings management
-- Standard library imports for typing and URL parsing
 
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

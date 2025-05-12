@@ -29,44 +29,68 @@ POST /v1/check
 ```
 Accepts either a repository URL or path string in the JSON body.
 
-**Request Body:**
-```json
-{
-    "repository_url": "https://github.com/owner/repo"
-}
-```
-OR
-```json
-{
-    "repository_path": "owner/repo"
-}
-```
-
-**Example curl:**
-```bash
-curl -X POST "http://localhost:8000/v1/check" \
-     -H "Content-Type: application/json" \
-     -d '{"repository_url": "https://github.com/fastapi-users/fastapi-users"}'
-```
-
 ### Batch Check Endpoint
 ```
 POST /v1/check/batch
 ```
 Check the health of multiple repositories in a single request.
 
-**Request Body:**
-```json
-{
-  "repos": [
-    {"repository_url": "https://github.com/fastapi-users/fastapi-users"},
-    {"repository_path": "gnachman/iterm2"},
-    {"repository_url": "https://gitlab.com/gitlab-org/gitlab"}
-  ]
-}
+### GitHub-Specific Endpoint
+```
+GET /v1/github/{owner}/{repo}
+```
+Check a GitHub repository directly by owner and repo name.
+
+### GitLab-Specific Endpoint
+```
+GET /v1/gitlab/{owner}/{repo}
+```
+Check a GitLab repository directly by owner/namespace and repo/project name.
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/zchryr/health.git
+cd health/repo-health-check-api
 ```
 
-**Example curl:**
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Running the Application
+
+Start the server:
+```bash
+uvicorn app:app --reload
+```
+
+The API will be available at `http://localhost:8000`
+
+## API Documentation
+
+Once the server is running, you can access:
+- Interactive API documentation: `http://localhost:8000/docs`
+- Alternative API documentation: `http://localhost:8000/redoc`
+
+## API Examples
+
+### Universal Check Example
+```bash
+curl -X POST "http://localhost:8000/v1/check" \
+     -H "Content-Type: application/json" \
+     -d '{"repository_url": "https://github.com/fastapi-users/fastapi-users"}'
+```
+
+### Batch Check Example
 ```bash
 curl -X POST "http://localhost:8000/v1/check/batch" \
      -H "Content-Type: application/json" \
@@ -79,32 +103,19 @@ curl -X POST "http://localhost:8000/v1/check/batch" \
          }'
 ```
 
-### GitHub-Specific Endpoint
-```
-GET /v1/github/{owner}/{repo}
-```
-Check a GitHub repository directly by owner and repo name.
-
-**Example curl:**
+### GitHub Check Example
 ```bash
 curl "http://localhost:8000/v1/github/fastapi-users/fastapi-users"
 ```
 
-### GitLab-Specific Endpoint
-```
-GET /v1/gitlab/{owner}/{repo}
-```
-Check a GitLab repository directly by owner/namespace and repo/project name.
-
-**Example curl:**
+### GitLab Check Example
 ```bash
 curl "http://localhost:8000/v1/gitlab/gnachman/iterm2"
 ```
 
 ## Response Format
 
-All endpoints return a health check result or a list of results. Example:
-
+Example response:
 ```json
 {
   "results": [
@@ -126,25 +137,6 @@ All endpoints return a health check result or a list of results. Example:
     }
   ]
 }
-```
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/zchryr/health.git
-cd repo-health-check-api
-```
-
-2. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
 ```
 
 ## Authentication Setup
@@ -180,21 +172,6 @@ pip install -r requirements.txt
 
 Note: Add `.env` to your `.gitignore` file to prevent committing sensitive tokens.
 
-## Running the API
-
-Start the server:
-```bash
-uvicorn app:app --reload
-```
-
-The API will be available at `http://localhost:8000`
-
-## API Documentation
-
-Once the server is running, you can access:
-- Interactive API documentation: `http://localhost:8000/docs`
-- Alternative API documentation: `http://localhost:8000/redoc`
-
 ## Health Check Thresholds
 
 The API uses the following thresholds for warnings:
@@ -210,6 +187,13 @@ The API provides detailed error messages for:
 - API request failures
 - Authentication issues
 - Rate limiting (when using tokens)
+
+## Dependencies
+
+- `fastapi`: Web framework for building APIs
+- `uvicorn`: ASGI server for running the application
+- `requests`: HTTP client for making API requests
+- `pydantic`: Data validation and settings management
 
 ## Contributing
 
