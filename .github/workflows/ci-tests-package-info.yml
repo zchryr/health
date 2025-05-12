@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - 'apis/package-info/**'
+  workflow_dispatch:
 
 jobs:
   test:
