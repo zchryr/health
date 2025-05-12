@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'apis/repo-health-check/**'
+      - '.github/workflows/ci-tests-repo-health-check.yml'
   pull_request:
     paths:
       - 'apis/repo-health-check/**'
+      - '.github/workflows/ci-tests-repo-health-check.yml'
   workflow_dispatch:
 
 jobs:

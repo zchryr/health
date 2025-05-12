@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'apis/package-info/**'
+      - '.github/workflows/ci-tests-package-info.yml'
   pull_request:
     paths:
       - 'apis/package-info/**'
+      - '.github/workflows/ci-tests-package-info.yml'
   workflow_dispatch:
 
 jobs:
