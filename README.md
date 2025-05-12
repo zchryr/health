@@ -42,6 +42,30 @@ For detailed information about specific components, please refer to their respec
 - [Package Info API Documentation](apis/package-info/README.md)
 - [Repository Health Check API Documentation](apis/repo-health-check/README.md)
 
+## Docker Compose Setup
+
+The repository includes a Docker Compose configuration for running both API services. To get started:
+
+1. Ensure you have Docker and Docker Compose installed on your system
+2. From the root directory, run:
+   ```bash
+   docker-compose up --build
+   ```
+
+This will start both services:
+- Repo Health Check API: http://localhost:8001
+- Package Info API: http://localhost:8002
+
+To run the services in detached mode:
+```bash
+docker compose up --build -d
+```
+
+To stop the services:
+```bash
+docker compose down
+```
+
 ## Development
 
 The repository uses Python for the main API services and includes example projects in various languages. Development dependencies and setup instructions can be found in the respective component directories.

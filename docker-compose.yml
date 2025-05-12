@@ -1,0 +1,26 @@
+services:
+  repo-health-check:
+    build:
+      context: ./apis/repo-health-check
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ./apis/repo-health-check:/app
+    restart: unless-stopped
+
+  package-info:
+    build:
+      context: ./apis/package-info
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ./apis/package-info:/app
+    restart: unless-stopped
