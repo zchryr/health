@@ -66,6 +66,38 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Development Setup
+
+For development, install the additional development dependencies:
+```bash
+pip install -r requirements-dev.txt
+```
+
+## Testing
+
+The project uses pytest for testing and pytest-cov for coverage reporting.
+
+### Running Tests
+
+Run all tests:
+```bash
+python3 -m pytest test_app.py
+```
+
+### Test Coverage
+
+View test coverage report:
+```bash
+python3 -m pytest --cov=app test_app.py
+```
+
+Generate HTML coverage report:
+```bash
+python3 -m pytest --cov=app --cov-report=html test_app.py
+```
+
+Current coverage: 51%
+
 ## Running the Application
 
 Start the server:
