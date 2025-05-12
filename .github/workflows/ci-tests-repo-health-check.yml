@@ -32,13 +32,17 @@ jobs:
         pip install -r requirements-dev.txt
 
     - name: Run tests with coverage
+      id: coverage
       run: |
-        python -m pytest test_app.py --cov=app --cov-report=term-missing
+        coverage run -m pytest test_app.py
+        coverage report --show-missing
 
     - name: Check coverage threshold
       run: |
-        coverage=$(python -m pytest test_app.py --cov=app --cov-report=term-missing | grep "TOTAL" | awk '{print $4}' | sed 's/%//')
-        if (( $(echo "$coverage < 50" | bc -l) )); then
-          echo "Coverage is below 50% threshold"
+        COVERAGE=$(coverage report | grep TOTAL | awk '{print $4}' | sed 's/%//')
+        if (( $(echo "$COVERAGE < 50" | bc -l) )); then
+          echo "Coverage is below 50% threshold (current: $COVERAGE%)"
           exit 1
+        else
+          echo "Coverage is above threshold (current: $COVERAGE%)"
         fi
