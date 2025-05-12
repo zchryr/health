@@ -10,7 +10,7 @@ This repository contains tools and services for analyzing and monitoring package
   - Docker deployment support
   - Comprehensive test coverage
 
-- `apis/repo-health-check/`: A FastAPI service for analyzing repository health metrics
+- `apis/repo-health-check/`: A FastAPI-based service for analyzing repository health metrics
   - Support for both GitHub and GitLab repositories
   - Health checks including:
     - Last activity tracking and inactivity warnings
