@@ -289,10 +289,18 @@ def parse_repo_path(path: str):
     """
     parts = path.split('/')
     if len(parts) >= 2:
-        if len(parts) == 2:
-            return 'github', parts[0], parts[1]
-        elif len(parts) >= 3:
-            return 'gitlab', parts[0], parts[-1]
+        domain = parts[0].lower()
+        if domain.endswith('.github.com') or domain == 'github.com':
+            platform = 'github'
+        elif domain.endswith('.gitlab.com') or domain == 'gitlab.com':
+            platform = 'gitlab'
+        else:
+            return None, None, None
+
+        if len(parts) >= 3:
+            owner = parts[1]
+            repo = parts[2]
+            return platform, owner, repo
     return None, None, None
 
 @github_router.get("/{owner}/{repo}", response_model=HealthCheckResult)
