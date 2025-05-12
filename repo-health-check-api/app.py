@@ -21,6 +21,32 @@ GITLAB_API_BASE = "https://gitlab.com/api/v4"
 README_FILES = ["README.md", "README.rst", "README.txt", "README"]
 LICENSE_FILES = ["LICENSE", "LICENSE.md", "COPYING", "COPYING.md"]
 
+def parse_iso8601_timestamp(timestamp: str) -> datetime:
+    """
+    Parse an ISO 8601 timestamp string into a timezone-aware datetime object.
+    Handles both GitHub and GitLab timestamp formats.
+    """
+    try:
+        # Try parsing with microseconds (GitLab format)
+        dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    except ValueError:
+        try:
+            # Try parsing without microseconds (GitHub format)
+            dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError:
+            raise ValueError(f"Invalid ISO 8601 timestamp format: {timestamp}")
+
+    # Make the datetime timezone-aware
+    return dt.replace(tzinfo=timezone.utc)
+
+def format_iso8601_timestamp(dt: datetime) -> str:
+    """
+    Format a datetime object into an ISO 8601 timestamp string.
+    """
+    if not dt.tzinfo:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.isoformat()
+
 # Create the main FastAPI app
 app = FastAPI(
     title="Repository Health Checker",
@@ -104,8 +130,7 @@ def check_github_health(owner: str, repo: str, token: Optional[str] = None) -> H
         result.last_activity = repo_data.get("pushed_at")
         if result.last_activity:
             # Parse the ISO 8601 timestamp and make it timezone-aware
-            last_activity = datetime.strptime(result.last_activity, "%Y-%m-%dT%H:%M:%SZ")
-            last_activity = last_activity.replace(tzinfo=timezone.utc)
+            last_activity = parse_iso8601_timestamp(result.last_activity)
             now = datetime.now(timezone.utc)
             result.days_since_last_activity = (now - last_activity).days
             if result.days_since_last_activity > 365:
@@ -168,8 +193,7 @@ def check_gitlab_health(owner: str, repo: str, token: Optional[str] = None) -> H
         result.last_activity = project_data.get("last_activity_at")
         if result.last_activity:
             # Parse the ISO 8601 timestamp and make it timezone-aware
-            last_activity = datetime.strptime(result.last_activity, "%Y-%m-%dT%H:%M:%S.%fZ")
-            last_activity = last_activity.replace(tzinfo=timezone.utc)
+            last_activity = parse_iso8601_timestamp(result.last_activity)
             now = datetime.now(timezone.utc)
             result.days_since_last_activity = (now - last_activity).days
             if result.days_since_last_activity > 365:
