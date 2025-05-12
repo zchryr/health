@@ -180,6 +180,11 @@ async def get_npm_package_info(package_name: str):
     """
     Get repository information for a single NPM package.
     """
+    # Validate package_name to ensure it matches the expected format for NPM package names
+    import re
+    if not re.fullmatch(r"[a-zA-Z0-9._-]+", package_name):
+        raise HTTPException(status_code=400, detail="Invalid package name format")
+
     info = get_npm_info(package_name)
 
     if not info:
