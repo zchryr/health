@@ -10,6 +10,17 @@ This repository contains tools and services for analyzing and monitoring package
   - Docker deployment support
   - Comprehensive test coverage
 
+- `repo-health-check-api/`: A FastAPI service for analyzing repository health metrics
+  - Support for both GitHub and GitLab repositories
+  - Health checks including:
+    - Last activity tracking and inactivity warnings
+    - Open issues count
+    - Stars and forks metrics
+    - README and LICENSE file presence
+  - Batch processing support for multiple repositories
+  - RESTful API endpoints with versioning (v1)
+  - Environment-based authentication for GitHub and GitLab APIs
+
 - `example-projects/`: Example projects in different languages for testing and demonstration
   - `node-project/`: Example Node.js project
   - `go-project/`: Example Go project
@@ -24,12 +35,15 @@ This repository aims to provide tools and services for:
 2. Monitoring package repositories and their metadata
 3. Providing insights into package dependencies and their relationships
 4. Supporting development teams in making informed decisions about package usage
+5. Evaluating repository health through activity metrics and documentation presence
+6. Identifying potential maintenance issues through inactivity tracking
 
 ## Getting Started
 
 For detailed information about specific components, please refer to their respective directories:
 - [Package Info API Documentation](package-info-api/README.md)
+- [Repository Health Check API Documentation](repo-health-check-api/README.md)
 
 ## Development
 
-The repository uses Python for the main API service and includes example projects in various languages. Development dependencies and setup instructions can be found in the respective component directories.
+The repository uses Python for the main API services and includes example projects in various languages. Development dependencies and setup instructions can be found in the respective component directories.
