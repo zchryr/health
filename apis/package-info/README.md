@@ -193,8 +193,6 @@ Generate HTML coverage report:
 python3 -m pytest --cov=app --cov-report=html test_app.py
 ```
 
-Current coverage: 88%
-
 ## Error Handling
 
 - Returns 404 status code for non-existent packages
