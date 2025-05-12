@@ -4,13 +4,13 @@ This repository contains tools and services for analyzing and monitoring package
 
 ## Repository Structure
 
-- `package-info-api/`: A FastAPI-based service that provides repository information for both Python packages (PyPI) and NPM packages (npmjs.org)
+- `apis/package-info/`: A FastAPI-based service that provides repository information for both Python packages (PyPI) and NPM packages (npmjs.org)
   - RESTful API endpoints for package metadata
   - Support for batch processing
   - Docker deployment support
   - Comprehensive test coverage
 
-- `repo-health-check-api/`: A FastAPI service for analyzing repository health metrics
+- `apis/repo-health-check/`: A FastAPI service for analyzing repository health metrics
   - Support for both GitHub and GitLab repositories
   - Health checks including:
     - Last activity tracking and inactivity warnings
@@ -41,8 +41,8 @@ This repository aims to provide tools and services for:
 ## Getting Started
 
 For detailed information about specific components, please refer to their respective directories:
-- [Package Info API Documentation](package-info-api/README.md)
-- [Repository Health Check API Documentation](repo-health-check-api/README.md)
+- [Package Info API Documentation](apis/package-info/README.md)
+- [Repository Health Check API Documentation](apis/repo-health-check/README.md)
 
 ## Development
 
