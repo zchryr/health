@@ -27,85 +27,104 @@ A FastAPI-based REST API that performs comprehensive health checks on public sof
 ```
 POST /v1/check
 ```
-Accepts either a repository URL or path string.
+Accepts either a repository URL or path string in the JSON body.
 
 **Request Body:**
 ```json
 {
-    "repository_url": "https://github.com/owner/repo"  // or
+    "repository_url": "https://github.com/owner/repo"
+}
+```
+OR
+```json
+{
     "repository_path": "owner/repo"
 }
+```
+
+**Example curl:**
+```bash
+curl -X POST "http://localhost:8000/v1/check" \
+     -H "Content-Type: application/json" \
+     -d '{"repository_url": "https://github.com/fastapi-users/fastapi-users"}'
+```
+
+### Batch Check Endpoint
+```
+POST /v1/check/batch
+```
+Check the health of multiple repositories in a single request.
+
+**Request Body:**
+```json
+{
+  "repos": [
+    {"repository_url": "https://github.com/fastapi-users/fastapi-users"},
+    {"repository_path": "gnachman/iterm2"},
+    {"repository_url": "https://gitlab.com/gitlab-org/gitlab"}
+  ]
+}
+```
+
+**Example curl:**
+```bash
+curl -X POST "http://localhost:8000/v1/check/batch" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "repos": [
+             {"repository_url": "https://github.com/fastapi-users/fastapi-users"},
+             {"repository_path": "gnachman/iterm2"},
+             {"repository_url": "https://gitlab.com/gitlab-org/gitlab"}
+           ]
+         }'
 ```
 
 ### GitHub-Specific Endpoint
 ```
 GET /v1/github/{owner}/{repo}
 ```
+Check a GitHub repository directly by owner and repo name.
+
+**Example curl:**
+```bash
+curl "http://localhost:8000/v1/github/fastapi-users/fastapi-users"
+```
 
 ### GitLab-Specific Endpoint
 ```
 GET /v1/gitlab/{owner}/{repo}
 ```
+Check a GitLab repository directly by owner/namespace and repo/project name.
 
-## Example Requests
-
-### Using Repository URL
+**Example curl:**
 ```bash
-# Check a GitHub repository using URL
-curl -X POST "http://localhost:8000/v1/check" \
-     -H "Content-Type: application/json" \
-     -d '{"repository_url": "https://github.com/fastapi-users/fastapi-users"}'
-
-# Check a GitLab repository using URL
-curl -X POST "http://localhost:8000/v1/check" \
-     -H "Content-Type: application/json" \
-     -d '{"repository_url": "https://gitlab.com/gitlab-org/gitlab"}'
-```
-
-### Using Repository Path
-```bash
-# Check a GitHub repository using path
-curl -X POST "http://localhost:8000/v1/check" \
-     -H "Content-Type: application/json" \
-     -d '{"repository_path": "fastapi-users/fastapi-users"}'
-
-# Check a GitLab repository using path
-curl -X POST "http://localhost:8000/v1/check" \
-     -H "Content-Type: application/json" \
-     -d '{"repository_path": "gitlab-org/gitlab"}'
-```
-
-### Direct Platform Endpoints
-```bash
-# Check GitHub repository directly
-curl "http://localhost:8000/v1/github/fastapi-users/fastapi-users"
-
-# Check GitLab repository directly
-curl "http://localhost:8000/v1/gitlab/gitlab-org/gitlab"
+curl "http://localhost:8000/v1/gitlab/gnachman/iterm2"
 ```
 
 ## Response Format
 
+All endpoints return a health check result or a list of results. Example:
+
 ```json
 {
-    "results": [
-        {
-            "repository_url": "string",
-            "platform": "string",
-            "owner": "string",
-            "repo_name": "string",
-            "last_activity": "string",
-            "days_since_last_activity": "integer",
-            "open_issues_count": "integer",
-            "stars_count": "integer",
-            "forks_count": "integer",
-            "has_readme": "boolean",
-            "has_license": "boolean",
-            "warnings": ["string"],
-            "errors": ["string"],
-            "is_healthy": "boolean"
-        }
-    ]
+  "results": [
+    {
+      "repository_url": "https://gitlab.com/gnachman/iterm2",
+      "platform": "gitlab",
+      "owner": "gnachman",
+      "repo_name": "iterm2",
+      "last_activity": "2025-05-12T18:33:05.118Z",
+      "days_since_last_activity": 0,
+      "open_issues_count": 20,
+      "stars_count": 1456,
+      "forks_count": 187,
+      "has_readme": true,
+      "has_license": true,
+      "warnings": [],
+      "errors": [],
+      "is_healthy": true
+    }
+  ]
 }
 ```
 
