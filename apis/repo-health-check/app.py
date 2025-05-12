@@ -111,6 +111,12 @@ def check_github_health(owner: str, repo: str, token: Optional[str] = None) -> H
     """
     Perform health checks on a GitHub repository.
     """
+    # Validate owner and repo parameters
+    if not re.match(r"^[a-zA-Z0-9_-]+$", owner):
+        raise ValueError("Invalid owner format. Only alphanumeric characters, dashes, and underscores are allowed.")
+    if not re.match(r"^[a-zA-Z0-9_-]+$", repo):
+        raise ValueError("Invalid repo format. Only alphanumeric characters, dashes, and underscores are allowed.")
+
     headers = get_github_headers(token)
     result = HealthCheckResult(
         repository_url=f"https://github.com/{owner}/{repo}",
