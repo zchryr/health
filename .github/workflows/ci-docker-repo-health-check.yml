@@ -6,11 +6,6 @@ on:
     paths:
       - 'apis/repo-health-check/**'
       - '.github/workflows/ci-repo-health-check.yml'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'apis/repo-health-check/**'
-      - '.github/workflows/ci-repo-health-check.yml'
   workflow_dispatch:
 
 env:

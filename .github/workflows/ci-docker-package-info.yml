@@ -6,11 +6,6 @@ on:
     paths:
       - 'apis/package-info/**'
       - '.github/workflows/ci-package-info.yml'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'apis/package-info/**'
-      - '.github/workflows/ci-package-info.yml'
   workflow_dispatch:
 
 env:
