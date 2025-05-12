@@ -96,7 +96,7 @@ Generate HTML coverage report:
 python3 -m pytest --cov=app --cov-report=html test_app.py
 ```
 
-Current coverage: 51%
+Current coverage: 66%
 
 ## Running the Application
 
