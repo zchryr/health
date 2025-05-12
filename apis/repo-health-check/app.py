@@ -174,6 +174,10 @@ def check_gitlab_health(owner: str, repo: str, token: Optional[str] = None) -> H
     """
     Perform health checks on a GitLab repository.
     """
+    # Validate the owner parameter
+    if not re.match(r"^[a-zA-Z0-9_-]+$", owner):
+        raise ValueError("Invalid owner parameter. Only alphanumeric characters, dashes, and underscores are allowed.")
+
     headers = get_gitlab_headers(token)
     result = HealthCheckResult(
         repository_url=f"https://gitlab.com/{owner}/{repo}",
