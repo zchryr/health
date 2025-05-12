@@ -1,4 +1,4 @@
-name: CI - apis/repo-health-check
+name: CI - Docker - apis/repo-health-check
 
 on:
   push:
