@@ -53,6 +53,10 @@ def get_npm_info(package_name: str) -> Dict:
     """
     Get information about an NPM package from npmjs.org.
     """
+    # Validate package_name to prevent partial SSRF
+    if not re.match(r"^[a-zA-Z0-9_-]+$", package_name):
+        raise ValueError("Invalid package name. Only alphanumeric characters, dashes, and underscores are allowed.")
+
     url = f"https://registry.npmjs.org/{package_name}"
     try:
         response = requests.get(url)
