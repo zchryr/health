@@ -132,7 +132,7 @@ All endpoints return a health check result or a list of results. Example:
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/zchryr/health.git
 cd repo-health-check-api
 ```
 
