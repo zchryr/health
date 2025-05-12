@@ -1,4 +1,4 @@
-name: CI - apis/package-info
+name: CI - Docker - apis/package-info
 
 on:
   push:
