@@ -107,10 +107,21 @@ def get_gitlab_headers(token: Optional[str] = None) -> Dict[str, str]:
         headers["PRIVATE-TOKEN"] = token
     return headers
 
+def validate_github_username(username: str) -> bool:
+    """
+    Validate that the given string is a valid GitHub username.
+    GitHub usernames must be alphanumeric, can include hyphens, but cannot start or end with a hyphen.
+    They must be between 1 and 39 characters long.
+    """
+    return bool(re.match(r"^[a-zA-Z0-9]([a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$", username))
+
 def check_github_health(owner: str, repo: str, token: Optional[str] = None) -> HealthCheckResult:
     """
     Perform health checks on a GitHub repository.
     """
+    if not validate_github_username(owner):
+        raise ValueError(f"Invalid GitHub username: {owner}")
+
     headers = get_github_headers(token)
     result = HealthCheckResult(
         repository_url=f"https://github.com/{owner}/{repo}",
