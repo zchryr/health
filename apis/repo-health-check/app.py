@@ -254,18 +254,19 @@ def parse_repo_url(url: str):
         if len(parts) != 2:
             return None, None, None
         path = parts[1]
-        if 'github.com' in url:
+        domain = url.split('@')[1].split(':')[0]
+        if domain.endswith('.github.com') or domain == 'github.com':
             platform = 'github'
-        elif 'gitlab.com' in url:
+        elif domain.endswith('.gitlab.com') or domain == 'gitlab.com':
             platform = 'gitlab'
         else:
             return None, None, None
     else:
         parsed_url = urlparse(url)
         path = parsed_url.path.strip('/')
-        if 'github.com' in parsed_url.netloc:
+        if parsed_url.netloc.endswith('.github.com') or parsed_url.netloc == 'github.com':
             platform = 'github'
-        elif 'gitlab.com' in parsed_url.netloc:
+        elif parsed_url.netloc.endswith('.gitlab.com') or parsed_url.netloc == 'gitlab.com':
             platform = 'gitlab'
         else:
             return None, None, None
