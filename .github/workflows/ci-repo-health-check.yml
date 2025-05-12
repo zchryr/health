@@ -1,4 +1,4 @@
-name: Build and Push Repo Health Check
+name: CI - apis/repo-health-check
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Build and Push Package Info
+name: CI - apis/package-info
 
 on:
   push:
