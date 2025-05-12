@@ -113,6 +113,38 @@ curl "http://localhost:8000/v1/github/fastapi-users/fastapi-users"
 curl "http://localhost:8000/v1/gitlab/gnachman/iterm2"
 ```
 
+## Docker Deployment
+
+The application can be deployed using Docker for a secure, isolated environment.
+
+### Building the Docker Image
+
+```bash
+docker build -t repo-health-checker .
+```
+
+### Running the Container
+
+```bash
+docker run -p 8000:8000 repo-health-checker
+```
+
+### Docker Security Features
+
+- Uses Python 3.12.10 on Alpine Linux
+- Runs as non-root user
+- Implements security best practices
+- Regular system package updates
+- Proper file permissions and ownership
+
+### Production Considerations
+
+- Use Docker secrets for sensitive data
+- Implement rate limiting
+- Use HTTPS
+- Regular image updates
+- Docker Content Trust for image signing
+
 ## Response Format
 
 Example response:
