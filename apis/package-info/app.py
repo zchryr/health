@@ -141,21 +141,23 @@ def extract_npm_repo_info(info: Dict) -> tuple[Optional[str], Optional[str], Opt
     platform, org, repo = parse_repo_url(repo_url)
     return repo_url, platform, org, repo
 
-def get_earliest_release_date(info: Dict) -> Optional[str]:
+def get_latest_version_release_date(info: Dict) -> Optional[str]:
     """
-    Get the earliest release date from PyPI package info.
+    Get the release date of the latest version from PyPI package info.
     """
     if not info or "releases" not in info:
         return None
 
-    earliest_date = None
-    for version, releases in info["releases"].items():
-        for release in releases:
-            upload_time = release.get("upload_time_iso_8601")
-            if upload_time and (earliest_date is None or upload_time < earliest_date):
-                earliest_date = upload_time
+    latest_version = info.get("info", {}).get("version")
+    if not latest_version or latest_version not in info["releases"]:
+        return None
 
-    return earliest_date
+    # Get the first release of the latest version
+    releases = info["releases"][latest_version]
+    if not releases:
+        return None
+
+    return releases[0].get("upload_time_iso_8601")
 
 @pypi_router.get("/{package_name}", response_model=PackageInfo)
 async def get_package_info(package_name: str):
@@ -170,7 +172,7 @@ async def get_package_info(package_name: str):
     package_info = info.get("info", {})
     repo_url, platform, org, repo = extract_repo_info(package_info)
     latest_version = package_info.get("version")
-    created_date = get_earliest_release_date(info)
+    created_date = get_latest_version_release_date(info)
 
     return PackageInfo(
         name=package_name,
@@ -201,7 +203,7 @@ async def get_npm_package_info(package_name: str):
 
     repo_url, platform, org, repo = extract_npm_repo_info(info)
     latest_version = info.get("dist-tags", {}).get("latest")
-    created_date = info.get("time", {}).get("created")
+    created_date = info.get("time", {}).get(latest_version) if latest_version else None
 
     return PackageInfo(
         name=package_name,
@@ -235,7 +237,7 @@ async def get_multiple_packages(package_names: List[str]):
         package_info = info.get("info", {})
         repo_url, platform, org, repo = extract_repo_info(package_info)
         latest_version = package_info.get("version")
-        created_date = get_earliest_release_date(info)
+        created_date = get_latest_version_release_date(info)
 
         results.append(PackageInfo(
             name=package_name,
@@ -270,7 +272,7 @@ async def get_multiple_npm_packages(package_names: List[str]):
 
         repo_url, platform, org, repo = extract_npm_repo_info(info)
         latest_version = info.get("dist-tags", {}).get("latest")
-        created_date = info.get("time", {}).get("created")
+        created_date = info.get("time", {}).get(latest_version) if latest_version else None
 
         results.append(PackageInfo(
             name=package_name,
