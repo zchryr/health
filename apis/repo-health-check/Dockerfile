@@ -1,6 +1,9 @@
 # Use the specified Python Alpine base image
 FROM python:3.12.10-alpine3.21
 
+# Add OpenContainers labels
+LABEL org.opencontainers.image.source="https://github.com/zchryr/health"
+
 # Set working directory
 WORKDIR /app
 
