@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt && \
     rm -rf /root/.cache/pip/*
 
 # Copy application code
-COPY . .
+COPY app.py .
 
 # Set proper permissions
 RUN chown -R appuser:appgroup /app
