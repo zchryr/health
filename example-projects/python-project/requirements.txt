@@ -1,4 +1,4 @@
 requests==2.2.1
 flask==0.12.2
 pandas==0.15.2
-numpy==1.13.1
+numpy==1.22.0
