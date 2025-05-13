@@ -97,7 +97,10 @@ def mock_npm_response():
         "name": "test-package",
         "description": "Test package",
         "dist-tags": {"latest": "1.0.0"},
-        "time": {"created": "2023-01-01T00:00:00Z"},
+        "time": {
+            "1.0.0": "2023-01-01T00:00:00Z",
+            "created": "2022-01-01T00:00:00Z"
+        },
         "repository": {
             "url": "https://github.com/org/repo"
         }
