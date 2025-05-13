@@ -1,0 +1,1656 @@
+{
+	"info": {
+		"_postman_id": "45656f51-26e3-4b09-a996-283fb71742c9",
+		"name": "health",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8734133"
+	},
+	"item": [
+		{
+			"name": "package-info",
+			"item": [
+				{
+					"name": "PyPi",
+					"item": [
+						{
+							"name": "requests",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'requests'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"requests\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Python HTTP for Humans.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/psf/requests\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'psf'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"psf\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'requests'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"requests\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "boto3",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'boto3'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"boto3\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"The AWS SDK for Python\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/boto/boto3\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'boto'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"boto\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'boto3'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"boto3\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/boto3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"boto3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "aiobotocore",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'aiobotocore'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"aiobotocore\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Async client for aws services using botocore and aiohttp\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/aio-libs/aiobotocore\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'aio-libs'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"aio-libs\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'aiobotocore'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"aiobotocore\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/aiobotocore",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"aiobotocore"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setuptools",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'setuptools'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"setuptools\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Easily download, build, install, upgrade, and uninstall Python packages\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/pypa/setuptools\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'pypa'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"pypa\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'setuptools'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"setuptools\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/setuptools",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"setuptools"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "urllib3",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'urllib3'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"urllib3\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"HTTP library with thread-safe connection pooling, file post, and more.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/urllib3/urllib3\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'urllib3'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"urllib3\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'urllib3'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"urllib3\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/urllib3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"urllib3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "botocore",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'botocore'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"botocore\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Low-level, data-driven core of boto 3.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"https://github.com/boto/botocore\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'boto'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"boto\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'botocore'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"botocore\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/botocore",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"botocore"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "batch",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Define the list of packages for the request body",
+											"const packageList = [\"requests\", \"fastapi\", \"pytest\"];",
+											"",
+											"// Log the current timestamp and the body being sent",
+											"console.log(`Preparing to send POST request to ${pm.request.url} at ${new Date().toISOString()}`);",
+											"console.log(\"Request body:\", JSON.stringify(packageList));",
+											"",
+											"// If you wanted to set the body programmatically (ensuring it's a JSON string):",
+											"// pm.request.body.update(JSON.stringify(packageList));",
+											"// Note: Since you'll likely set the body directly in the Postman UI 'Body' tab for this specific case,",
+											"// the line above might be redundant but shows how it's done if the body were generated here.",
+											"// Ensure the 'Content-Type' header is set to 'application/json' in the Headers tab.",
+											"",
+											"// Example: If you needed to add a dynamic header",
+											"// pm.request.headers.add({ key: 'X-Request-ID', value: pm.variables.get(\"requestId\") });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK (or 201 Created, adjust if your API uses a different success code for POST)",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the top-level \"packages\" array",
+											"pm.test(\"Response has a 'packages' array\", function () {",
+											"    pm.expect(jsonData).to.have.property('packages');",
+											"    pm.expect(jsonData.packages).to.be.an('array');",
+											"});",
+											"",
+											"// 4. Check if the \"packages\" array contains the expected number of items",
+											"const expectedPackageCount = 3; // Based on the request [\"requests\", \"fastapi\", \"pytest\"]",
+											"pm.test(`Packages array contains ${expectedPackageCount} items`, function () {",
+											"    pm.expect(jsonData.packages).to.have.lengthOf(expectedPackageCount);",
+											"});",
+											"",
+											"// 5. Define the expected package names from the request",
+											"const requestedPackageNames = [\"requests\", \"fastapi\", \"pytest\"];",
+											"",
+											"// 6. Validate each package object in the array",
+											"jsonData.packages.forEach((pkg, index) => {",
+											"    pm.test(`Package[${index}] - '${pkg.name}' - has required fields and no error`, function () {",
+											"        pm.expect(pkg).to.have.all.keys(",
+											"            'name',",
+											"            'summary',",
+											"            'repository_url',",
+											"            'repository_platform',",
+											"            'repository_org',",
+											"            'repository_name',",
+											"            'latest_version',",
+											"            'created_date',",
+											"            'error'",
+											"        );",
+											"        pm.expect(pkg.name).to.be.oneOf(requestedPackageNames, \"Package name should be one of the requested names\");",
+											"        pm.expect(pkg.summary).to.be.a('string');",
+											"        pm.expect(pkg.latest_version).to.be.a('string');",
+											"        pm.expect(pkg.error).to.eql(false, `Package '${pkg.name}' should not have an error`);",
+											"    });",
+											"",
+											"    // More specific checks for each package if needed",
+											"    if (pkg.name === \"requests\") {",
+											"        pm.test(`Package[${index}] - 'requests' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.eql(\"Python HTTP for Humans.\");",
+											"            pm.expect(pkg.repository_org).to.eql(\"psf\");",
+											"        });",
+											"    } else if (pkg.name === \"fastapi\") {",
+											"        pm.test(`Package[${index}] - 'fastapi' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.contain(\"FastAPI framework\"); // Using .contain for flexibility",
+											"            pm.expect(pkg.repository_org).to.eql(\"fastapi\");",
+											"        });",
+											"    } else if (pkg.name === \"pytest\") {",
+											"        pm.test(`Package[${index}] - 'pytest' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.eql(\"pytest: simple powerful testing with Python\");",
+											"            pm.expect(pkg.repository_org).to.eql(\"pytest-dev\");",
+											"        });",
+											"    }",
+											"});",
+											"",
+											"// 7. Check if all requested packages are present in the response",
+											"pm.test(\"All requested package names are present in the response\", function () {",
+											"    const responsePackageNames = jsonData.packages.map(p => p.name);",
+											"    requestedPackageNames.forEach(requestedName => {",
+											"        pm.expect(responsePackageNames).to.include(requestedName, `Response should include package: ${requestedName}`);",
+											"    });",
+											"});",
+											"",
+											"",
+											"// Optional: Log some data from the response",
+											"if (jsonData && jsonData.packages) {",
+											"    console.log(`Received details for ${jsonData.packages.length} packages.`);",
+											"    jsonData.packages.forEach(pkg => {",
+											"        console.log(`- ${pkg.name}: v${pkg.latest_version}`);",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"requests\", \"fastapi\", \"pytest\"]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8002/v1/pypi/batch",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"pypi",
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "npmjs",
+					"item": [
+						{
+							"name": "lodash",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'lodash'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"lodash\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Lodash modular utilities.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/lodash/lodash.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'lodash'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"lodash\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'lodash'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"lodash\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/lodash",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"lodash"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "chalk",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'chalk'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"chalk\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Terminal string styling done right\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/chalk/chalk.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'chalk'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"chalk\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'chalk'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"chalk\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/chalk",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"chalk"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "request",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'request'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"request\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Simplified HTTP request client.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/request/request.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'request'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"request\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'request'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"request\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/request",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"request"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "commander",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'commander'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"commander\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"the complete solution for node.js command-line programs\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/tj/commander.js.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'tj'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"tj\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'commander.js'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"commander.js\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/commander",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"commander"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "react",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'react'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"react\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"React is a JavaScript library for building user interfaces.\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/facebook/react.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'facebook'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"facebook\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'react'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"react\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/react",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"react"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "express",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Log the current timestamp before sending the request",
+											"console.log(`Preparing to send request for ${pm.request.url} at ${new Date().toISOString()}`);",
+											"",
+											"// Example: If you needed to set a dynamic query parameter (not needed for your specific cURL)",
+											"// pm.request.url.query.add({ key: 'timestamp', value: Date.now() });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the presence and value of specific fields",
+											"pm.test(\"Package name is 'express'\", function () {",
+											"    pm.expect(jsonData.name).to.eql(\"express\");",
+											"});",
+											"",
+											"pm.test(\"Summary is present and is a string\", function () {",
+											"    pm.expect(jsonData.summary).to.be.a('string');",
+											"    pm.expect(jsonData.summary).to.eql(\"Fast, unopinionated, minimalist web framework\");",
+											"});",
+											"",
+											"pm.test(\"Repository URL is present and is a string\", function () {",
+											"    pm.expect(jsonData.repository_url).to.be.a('string');",
+											"    pm.expect(jsonData.repository_url).to.eql(\"git+https://github.com/expressjs/express.git\");",
+											"});",
+											"",
+											"pm.test(\"Repository platform is 'github'\", function () {",
+											"    pm.expect(jsonData.repository_platform).to.eql(\"github\");",
+											"});",
+											"",
+											"pm.test(\"Repository organization is 'expressjs'\", function () {",
+											"    pm.expect(jsonData.repository_org).to.eql(\"expressjs\");",
+											"});",
+											"",
+											"pm.test(\"Repository name is 'express'\", function () {",
+											"    pm.expect(jsonData.repository_name).to.eql(\"express\");",
+											"});",
+											"",
+											"pm.test(\"Latest version is present and is a string\", function () {",
+											"    pm.expect(jsonData.latest_version).to.be.a('string');",
+											"    // You could add a more specific check for version format if needed, e.g., using a regex",
+											"    // pm.expect(jsonData.latest_version).to.match(/^\\d+\\.\\d+\\.\\d+$/);",
+											"});",
+											"",
+											"pm.test(\"Created date is present and is a string (date format)\", function () {",
+											"    pm.expect(jsonData.created_date).to.be.a('string');",
+											"    // Basic check for non-empty string; more robust date validation could be added",
+											"    pm.expect(jsonData.created_date).to.not.be.empty;",
+											"});",
+											"",
+											"// 4. Check the 'error' field",
+											"pm.test(\"Error field is false\", function () {",
+											"    pm.expect(jsonData.error).to.eql(false);",
+											"});",
+											"",
+											"// Optional: Log parts of the response for debugging or information",
+											"console.log(\"Received latest version:\", jsonData.latest_version);",
+											"console.log(\"Repository:\", jsonData.repository_url);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/express",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"express"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "batch",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Pre-request Script",
+											"",
+											"// Define the list of NPM packages for the request body",
+											"const packageList = [\"express\", \"react\", \"typescript\"];",
+											"",
+											"// Log the current timestamp and the body being sent",
+											"console.log(`Preparing to send POST request to ${pm.request.url} at ${new Date().toISOString()}`);",
+											"console.log(\"Request body:\", JSON.stringify(packageList));",
+											"",
+											"// If you wanted to set the body programmatically (ensuring it's a JSON string):",
+											"// pm.request.body.update(JSON.stringify(packageList));",
+											"// Note: This is often handled by setting the body in the Postman UI's 'Body' tab.",
+											"// Ensure the 'Content-Type' header is set to 'application/json' in the Headers tab."
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Post-request Script (Tests)",
+											"",
+											"// 1. Check if the status code is 200 OK (adjust if your API uses a different success code for POST)",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// 2. Check if the response has a valid JSON body",
+											"pm.test(\"Response is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"// Parse the JSON response body",
+											"const jsonData = pm.response.json();",
+											"",
+											"// 3. Check for the top-level \"packages\" array",
+											"pm.test(\"Response has a 'packages' array\", function () {",
+											"    pm.expect(jsonData).to.have.property('packages');",
+											"    pm.expect(jsonData.packages).to.be.an('array');",
+											"});",
+											"",
+											"// 4. Check if the \"packages\" array contains the expected number of items",
+											"const expectedPackageCount = 3; // Based on the request [\"express\", \"react\", \"typescript\"]",
+											"pm.test(`Packages array contains ${expectedPackageCount} items`, function () {",
+											"    pm.expect(jsonData.packages).to.have.lengthOf(expectedPackageCount);",
+											"});",
+											"",
+											"// 5. Define the expected package names from the request",
+											"const requestedPackageNames = [\"express\", \"react\", \"typescript\"];",
+											"",
+											"// 6. Validate each package object in the array",
+											"jsonData.packages.forEach((pkg, index) => {",
+											"    pm.test(`Package[${index}] - '${pkg.name}' - has required fields and no error`, function () {",
+											"        pm.expect(pkg).to.have.all.keys(",
+											"            'name',",
+											"            'summary',",
+											"            'repository_url',",
+											"            'repository_platform',",
+											"            'repository_org',",
+											"            'repository_name',",
+											"            'latest_version',",
+											"            'created_date',",
+											"            'error'",
+											"        );",
+											"        pm.expect(pkg.name).to.be.oneOf(requestedPackageNames, \"Package name should be one of the requested names\");",
+											"        pm.expect(pkg.summary).to.be.a('string');",
+											"        pm.expect(pkg.latest_version).to.be.a('string');",
+											"        pm.expect(pkg.repository_url).to.be.a('string'); // Note: format might be \"git+https://...\"",
+											"        pm.expect(pkg.error).to.eql(false, `Package '${pkg.name}' should not have an error`);",
+											"    });",
+											"",
+											"    // More specific checks for each package",
+											"    if (pkg.name === \"express\") {",
+											"        pm.test(`Package[${index}] - 'express' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.eql(\"Fast, unopinionated, minimalist web framework\");",
+											"            pm.expect(pkg.repository_org).to.eql(\"expressjs\");",
+											"        });",
+											"    } else if (pkg.name === \"react\") {",
+											"        pm.test(`Package[${index}] - 'react' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.eql(\"React is a JavaScript library for building user interfaces.\");",
+											"            pm.expect(pkg.repository_org).to.eql(\"facebook\");",
+											"        });",
+											"    } else if (pkg.name === \"typescript\") {",
+											"        pm.test(`Package[${index}] - 'typescript' specific checks`, function () {",
+											"            pm.expect(pkg.summary).to.eql(\"TypeScript is a language for application scale JavaScript development\");",
+											"            pm.expect(pkg.repository_org).to.eql(\"microsoft\");",
+											"            pm.expect(pkg.repository_name).to.eql(\"TypeScript\"); // Note case sensitivity from example",
+											"        });",
+											"    }",
+											"});",
+											"",
+											"// 7. Check if all requested packages are present in the response",
+											"pm.test(\"All requested package names are present in the response\", function () {",
+											"    const responsePackageNames = jsonData.packages.map(p => p.name);",
+											"    requestedPackageNames.forEach(requestedName => {",
+											"        pm.expect(responsePackageNames).to.include(requestedName, `Response should include package: ${requestedName}`);",
+											"    });",
+											"});",
+											"",
+											"// Optional: Log some data from the response for quick review",
+											"if (jsonData && jsonData.packages) {",
+											"    console.log(`Received details for ${jsonData.packages.length} NPM packages.`);",
+											"    jsonData.packages.forEach(pkg => {",
+											"        console.log(`- ${pkg.name} (v${pkg.latest_version}): ${pkg.summary}`);",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"express\", \"react\", \"typescript\"]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8002/v1/npm/batch",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"v1",
+										"npm",
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
