@@ -8,10 +8,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "axios": "^1.6.7",
-    "lodash": "^4.17.21",
-    "moment": "^2.30.1"
+    "express": "^3.18.1",
+    "axios": "^0.23.0",
+    "lodash": "^3.10.1",
+    "moment": "^2.13.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
