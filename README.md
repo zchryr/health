@@ -21,6 +21,10 @@ This repository contains tools and services for analyzing and monitoring package
   - RESTful API endpoints with versioning (v1)
   - Environment-based authentication for GitHub and GitLab APIs
 
+- `dep_extractor/`: A Python based set of tooling that is still _very much_ a work in progress
+  - Python CLI tool
+  - GitHub Action
+
 - `example-projects/`: Example projects in different languages for testing and demonstration
   - `node-project/`: Example Node.js project
   - `go-project/`: Example Go project
