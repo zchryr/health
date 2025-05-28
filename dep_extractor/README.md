@@ -38,7 +38,7 @@ docker run --rm \
   -e INPUT_MANIFEST=/path/to/manifest \
   -e INPUT_MANIFEST_TYPE=requirements.txt \  # optional
   -v $(pwd):/data \
-  dep-extractor
+  dep_extractor
 ```
 - `INPUT_MANIFEST` is required and should be the path inside the container (e.g., `/data/requirements.txt`).
 - `INPUT_MANIFEST_TYPE` is optional. If omitted, the type is inferred from the filename.

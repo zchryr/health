@@ -21,8 +21,12 @@ COPY ./requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt \
     && rm -rf /root/.cache/pip/*
 
-# Copy the dep_extractor code
-COPY . /dep_extractor
+# Copy the dep_extractor code into a subdirectory to make it a package
+RUN mkdir -p /dep_extractor/dep_extractor
+COPY . /dep_extractor/dep_extractor
+
+# Set PYTHONPATH so dep_extractor is discoverable
+ENV PYTHONPATH=/dep_extractor
 
 # Copy entrypoint script and ensure it's executable
 COPY entrypoint.sh /entrypoint.sh

@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push multi-arch Docker image
-        working-directory: dep-extractor
+        working-directory: dep_extractor
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/health/dep-extractor
           docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_ID:latest . --push
