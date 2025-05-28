@@ -1,0 +1,16 @@
+name: 'dep-extractor'
+description: 'Extract direct dependencies from a manifest file (Python, JS, etc.)'
+author: 'Zachary R'
+runs:
+  using: 'docker'
+  image: 'ghcr.io/zchryr/health/dep-extractor:latest'
+inputs:
+  manifest:
+    description: 'Path to the manifest file (e.g., requirements.txt, package.json)'
+    required: true
+  manifest_type:
+    description: 'Type of manifest (optional, e.g., requirements.txt, package.json, poetry.lock)'
+    required: false
+outputs:
+  output:
+    description: 'Extracted dependencies as JSON (single-line)'
